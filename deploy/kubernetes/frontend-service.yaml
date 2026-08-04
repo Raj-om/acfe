@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: acfe-frontend
+  namespace: acfe
+spec:
+  selector:
+    app: acfe-frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
