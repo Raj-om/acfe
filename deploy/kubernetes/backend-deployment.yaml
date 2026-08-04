@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acfe-backend
+  namespace: acfe
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: acfe-backend
+  template:
+    metadata:
+      labels:
+        app: acfe-backend
+    spec:
+      containers:
+      - name: acfe-backend
+        image: acfe-backend:latest
+        ports:
+        - containerPort: 8000
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+        envFrom:
+        - configMapRef:
+            name: acfe-config
+        - secretRef:
+            name: acfe-secrets
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 15
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 10
