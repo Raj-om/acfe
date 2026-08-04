@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  acfe-backend:
+    restart: always
+    environment:
+      - ENVIRONMENT=production
+  acfe-frontend:
+    restart: always
